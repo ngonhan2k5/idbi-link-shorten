@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "3eb7477738aff399fb55";
+/******/ 	var hotCurrentHash = "62ca77522463b85c9612";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -41008,18 +41008,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
-var input;
-var cursor;
-var hiddenInput;
-var content = [];
-var lastContent = "",
-    targetContent = "";
-var inputLock = false;
-var autoWriteTimer;
-var isMobile, isIE;
+
 
 var CoolInput =
 /*#__PURE__*/
@@ -41034,12 +41027,39 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CoolInput).call(this, props)); // Don't call this.setState() here!
     // this.state = { counter: 0 };
 
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
-    _this.handleKeyUp = _this.handleKeyUp.bind(_assertThisInitialized(_this));
-    _this.url = '';
+    _defineProperty(_assertThisInitialized(_this), "handleClick", function () {
+      console.log("post: " + _this.url);
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/shorter', {
+        url: _this.url,
+        lastName: 'Flintstone'
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleChange", function (event) {
+      _this.url = event.target.value;
+      var validUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(_this.url);
+
+      _this.setState(Object.assign({}, {
+        validUrl: validUrl
+      }));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleKeyUp", function (e) {
+      if (e.keyCode === 13) {
+        // Cancel the default action, if needed
+        e.preventDefault(); // Trigger the button element with a click
+
+        _this.handleClick();
+      }
+    });
+
+    _this.url = 'http://idbi.me';
     _this.state = {
-      validUrl: false
+      validUrl: true
     };
     return _this;
   }
@@ -41047,38 +41067,6 @@ function (_React$Component) {
   _createClass(CoolInput, [{
     key: "componentDidMount",
     value: function componentDidMount() {}
-  }, {
-    key: "handleClick",
-    value: function handleClick() {
-      console.log(11111111);
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/shorter', {
-        url: this.url,
-        lastName: 'Flintstone'
-      }).then(function (response) {
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: "handleChange",
-    value: function handleChange(event) {
-      this.url = event.target.value;
-      this.validUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(this.url);
-      this.setState(Object.assign({}, {
-        validUrl: this.validUrl
-      }));
-    }
-  }, {
-    key: "handleKeyUp",
-    value: function handleKeyUp(e) {
-      if (e.keyCode === 13) {
-        // Cancel the default action, if needed
-        e.preventDefault(); // Trigger the button element with a click
-
-        this.handleClick();
-      }
-    }
   }, {
     key: "render",
     value: function render() {
@@ -41089,13 +41077,14 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "url",
+        value: this.url,
         placeholder: "Input url to shorten",
         onChange: this.handleChange,
         onKeyUp: this.handleKeyUp
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: this.validUrl ? "namer-controls active" : "namer-controls"
+        className: this.state.validUrl ? "namer-controls active" : "namer-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        onClick: this.validUrl && this.handleClick
+        onClick: this.state.validUrl ? this.handleClick : null
       }, "Shorten"))));
     }
   }]);

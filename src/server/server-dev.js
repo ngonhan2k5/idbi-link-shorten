@@ -7,6 +7,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import history from 'connect-history-api-fallback'
 
+import routes from './routes/shorter'
 
 import config from '../../webpack.dev.config.js'
 const app = express(),
@@ -14,7 +15,7 @@ const app = express(),
     HTML_FILE = path.join(DIST_DIR, 'index.html'),
     compiler = webpack(config)
 
-    app.use(history()); 
+    // app.use(history()); 
 
 app.use(webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
@@ -23,22 +24,24 @@ app.use(webpackHotMiddleware(compiler))
 
 app.use(express.json())
 
-app.post('/api/shorter', (req, res, next) => {
-    console.log(req.body.url)
-    res.send('OK')
-    res.end()
-})
+app.post('/api/shorter', routes.shorter)
 
-app.get('*', (req, res, next) => {
-    compiler.outputFileSystem.readFile(HTML_FILE, (err, result) => {
-        if (err) {
-            return next(err)
-        }
-        res.set('content-type', 'text/html')
-        res.send(result)
-        res.end()
-    })
-})
+app.get('/u/:url', routes.fetch)
+
+
+// app.get('*', (req, res, next) => {
+//     console.log("here")
+//     compiler.outputFileSystem.readFile(HTML_FILE, (err, result) => {
+//         if (err) {
+//             return next(err)
+//         }
+//         res.set('content-type', 'text/html')
+//         res.send(result)
+//         res.end()
+//     })
+// })
+
+
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
     console.log(`App listening to ${PORT}....`)
