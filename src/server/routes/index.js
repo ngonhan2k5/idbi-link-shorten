@@ -18,7 +18,7 @@ const routes = {
         console.log("Fetch", req.params)
         // let url = codenamize(req.body.url)
         let url = req.params.url
-        db.fetch(url)
+        db.fetchUrl(url)
     },
 }
 
