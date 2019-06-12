@@ -13,7 +13,7 @@ app.use(express.json())
 
 app.post('/api/shorter', routes.shorter)
 
-app.get('/:url', routes.fetch)
+app.get('/:url-:lru', routes.fetch)
 
 app.get('*', (req, res) => {
     res.sendFile(HTML_FILE)

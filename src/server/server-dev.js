@@ -26,7 +26,7 @@ app.use(express.json())
 
 app.post('/api/shorter', routes.shorter)
 
-app.get('/u/:url', routes.fetch)
+app.get('/:url-:lru', routes.fetch)
 
 
 // app.get('*', (req, res, next) => {

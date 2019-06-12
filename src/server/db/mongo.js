@@ -23,9 +23,14 @@ const db = {
                 if (err) reject(err)
                 var dbo = db.db("mydb");
                 dbo.collection("links").findOne({slug:url}, function(err, result) {
-                  if (err) throw reject(err)
-                  console.log(result)
+                  if (err) {
+                      reject(err)
+                  }else{
+                        console.log(result)
+                        resolve(result)
+                  }
                   db.close()
+                  
                 });
               });
         })

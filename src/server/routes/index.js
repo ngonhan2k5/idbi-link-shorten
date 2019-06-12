@@ -17,8 +17,16 @@ const routes = {
     fetch: (req, res, next) => {
         console.log("Fetch", req.params)
         // let url = codenamize(req.body.url)
-        let url = req.params.url
-        db.fetchUrl(url)
+        let url = req.params.url + req.params.lru
+        db.fetchUrl(url).then(
+            (data)=>{
+                console.log("Fetched: ", data)
+                res.end()
+            }),
+            (err) => {
+                console.log("Fetch fail",err)
+                res.end()
+            }
     },
 }
 
