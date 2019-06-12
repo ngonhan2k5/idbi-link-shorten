@@ -14,7 +14,7 @@ const db = {
                     console.log("Read error", err)
                     reject(err)
                 }else{
-                    resolve(data)
+                    resolve({url:data})
                 }
             });
         })

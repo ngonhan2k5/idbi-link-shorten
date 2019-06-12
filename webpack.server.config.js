@@ -1,13 +1,16 @@
 const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
+
+const HtmlWebPackPlugin = require("html-webpack-plugin")
+
 module.exports = (env, argv) => {
   const SERVER_PATH = (argv.mode === 'production') ?
     './src/server/server-prod.js' :
     './src/server/server-dev.js'
 return ({
     entry: {
-      server: SERVER_PATH,
+      server: SERVER_PATH
     },
     output: {
       path: path.join(__dirname, 'dist'),
@@ -32,10 +35,26 @@ return ({
           use: {
             loader: "babel-loader"
           }
-        }
+        },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 2,
+                modules: true,
+                // namedExport: true, // this is  invalid Options ,I find it
+                camelCase: true,
+                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              },
+            }
+          ]
+        },
       ]
     },
     plugins: [
+      
       new webpack.LoaderOptionsPlugin({
         // test: /\.xxx$/, // may apply this only for some modules
         options: {

@@ -9,7 +9,8 @@ const HtmlWebPackPlugin = require("html-webpack-plugin")
 
 module.exports = {
   entry: {
-    main: ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './src/index.js']
+    main: ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './src/index.js'],
+    error:['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './src/error.js']
   },
   output: {
     path: path.resolve(__dirname, './dist/public'),
@@ -92,9 +93,13 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./src/html/index.html",
       filename: "./index.html",
-      excludeChunks: ['server']
+      excludeChunks: ['server', 'error']
     }),
-
+    new HtmlWebPackPlugin({
+      template: "./src/html/error.html",
+      filename: "./error.html",
+      chunks: ['error']
+    }),
     //new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
 
     new webpack.HotModuleReplacementPlugin(),

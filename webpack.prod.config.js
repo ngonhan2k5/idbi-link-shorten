@@ -6,7 +6,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin')
 module.exports = {
   entry: {
-    main: './src/index.js'
+    main: './src/index.js',
+    error: './src/error.js'
   },
   output: {
     path: path.join(__dirname, 'dist','public'),
@@ -81,7 +82,13 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/html/index.html",
-      filename: "./index.html"
+      filename: "./index.html",
+      excludeChunks: ['server', 'error']
+    }),
+    new HtmlWebPackPlugin({
+      template: "./src/html/error.html",
+      filename: "./error.html",
+      chunks: ['error']
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",

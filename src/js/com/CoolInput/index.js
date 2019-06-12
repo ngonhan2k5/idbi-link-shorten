@@ -14,7 +14,6 @@ class CoolInput extends React.Component {
         this.url = 'http://idbi.me'
         this.state = {validUrl:true, phase:"input"}
         this.shortedUrl = ""
-        console.log(styles)
     }
 
     componentDidMount() {
@@ -28,9 +27,9 @@ class CoolInput extends React.Component {
             lastName: 'Flintstone'
           })
           .then(function (response) {
-                that.shortedUrl = response.data.shorted_url
+                that.shortedUrl = response.data.shortedUrl
                 that.setState(Object.assign({}, that.state, {phase:"output"}))
-                console.log(response.data.shorted_url, that);
+                console.log(response.data.shortedUrl, that);
                 that.textInput.select()
           })
           .catch(function (error) {
@@ -39,7 +38,7 @@ class CoolInput extends React.Component {
     }
     handleChange = (event)=>{
         this.url = event.target.value
-        let validUrl =/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(this.url)
+        let validUrl =/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(this.url)
         this.setState(Object.assign({}, this.state, {validUrl: validUrl}))
     }
     handleKeyUp = (e) => {

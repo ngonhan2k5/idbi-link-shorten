@@ -12,7 +12,8 @@ import routes from './routes'
 
 const app = express(),
     DIST_DIR = __dirname,
-    HTML_FILE = path.join(DIST_DIR, 'index.html'),
+    HTML_FILE = path.join(DIST_DIR, 'public', 'index.html'),
+    ERROR_FILE = path.join(DIST_DIR, 'public', 'error.html'),
     compiler = webpack(config)
 
     // app.use(history()); 
@@ -23,6 +24,7 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler))
 
 app.use(express.json())
+
 
 app.post('/api/shorter', routes.shorter)
 
@@ -40,6 +42,7 @@ app.get('/:url-:lru', routes.fetch)
 //         res.end()
 //     })
 // })
+app.use(routes.errorPage(compiler, ERROR_FILE))
 
 
 const PORT = process.env.PORT || 5000
