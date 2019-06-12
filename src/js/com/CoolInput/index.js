@@ -1,15 +1,20 @@
 import React from "react";
-import '../../css/cool-input.css'
+// import '../../../css/cool-input.css'
 import axios from 'axios'
+
+import styles from './CoolInput.css'
+
 
 class CoolInput extends React.Component {
     constructor(props) {
         super(props);
         // Don't call this.setState() here!
         // this.state = { counter: 0 };
+        console.log(process.env.NODE_ENV)
         this.url = 'http://idbi.me'
         this.state = {validUrl:true, phase:"input"}
         this.shortedUrl = ""
+        console.log(styles)
     }
 
     componentDidMount() {
@@ -68,37 +73,30 @@ class CoolInput extends React.Component {
         if (this.state.phase == "input")
 
             return (
-                <div id="namer">
+                <div id={styles.namer}>
                     
-                    <div id="namer-input">
+                    <div id={styles['namer-input']}>
                         <input type="text" autoFocus onFocus={this.setFocus} name="url" value={this.url} placeholder="Input url to shorten" onChange={this.handleChange} onKeyUp={this.handleKeyUp}/>
                     </div>
-                    <div className={this.state.validUrl?"namer-controls active":"namer-controls"} >
+                    <div className={this.state.validUrl?(styles["namer-controls"] + " " + styles.active) :styles["namer-controls"]} >
                         <div><span onClick={this.state.validUrl?this.handleClick:null}>Shorten</span></div>
                     </div>
                 </div>
             )
         else
             return (
-                <div id="namer">
+                <div id={styles.namer}>
                     
-                    <div id="namer-input">
+                    <div id={styles['namer-input']}>
                         <input ref={this.setTextInputRef} type="text" name="url" onFocus={this.setFocus}  value={this.shortedUrl} readOnly onKeyUp={this.handleKeyUpBack}/>
                     </div>
-                    <div className={this.state.validUrl?"namer-controls active":"namer-controls"} >
+                    <div className={styles["namer-controls"] + " " + styles.active} >
                         <div><span onClick={this.handleClickBack}>Back</span></div>
+                        <div><span onClick={this.handleClickTest}><a className={styles.linkButton}  href={this.shortedUrl} target="_blank">Test</a></span></div>
                     </div>
                 </div>
             )    
     }
 }
 
-
 export default CoolInput
-
-
-
-window.onload = function () {
-
-
-}

@@ -5,11 +5,11 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
-import history from 'connect-history-api-fallback'
-
-import routes from './routes/shorter'
+// import history from 'connect-history-api-fallback'
 
 import config from '../../webpack.dev.config.js'
+import routes from './routes'
+
 const app = express(),
     DIST_DIR = __dirname,
     HTML_FILE = path.join(DIST_DIR, 'index.html'),
@@ -42,7 +42,7 @@ app.get('/u/:url', routes.fetch)
 // })
 
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
     console.log(`App listening to ${PORT}....`)
     console.log('Press Ctrl+C to quit.')

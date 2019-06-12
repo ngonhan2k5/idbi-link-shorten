@@ -14,7 +14,9 @@ return ({
       publicPath: '/',
       filename: '[name].js'
     },
+    mode: argv.mode,
     target: 'node',
+    // dbLink: 'memcache',
     node: {
       // Need this when working with express, otherwise the build fails
       __dirname: false,   // if you don't put this is, __dirname
@@ -32,6 +34,14 @@ return ({
           }
         }
       ]
-    }
+    },
+    plugins: [
+      new webpack.LoaderOptionsPlugin({
+        // test: /\.xxx$/, // may apply this only for some modules
+        options: {
+          dbLink: 'memcached'
+        }
+      })
+    ]
   })
 }

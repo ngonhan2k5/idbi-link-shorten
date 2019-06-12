@@ -2,6 +2,9 @@ const path = require("path")
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+
 // var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
@@ -14,11 +17,12 @@ module.exports = {
     filename: '[name].js'
   },
   mode: 'development',
+  // dbLink: 'memcached',
   target: 'web',
   devtool: 'source-map',
   module: {
     rules: [
-      
+
       // {
       //   enforce: "pre",
       //   test: /\.js$/,
@@ -46,13 +50,41 @@ module.exports = {
           }
         ]
       },
+      // {
+      //   test: /\.st\.css$/,
+      //   use: ['style-loader', 
+      //   {
+      //     loader: 'css-loader',
+      //     options: {
+      //       importLoaders: 2,
+      //       modules: false,
+      //       // namedExport: true, // this is  invalid Options ,I find it
+      //       camelCase: true,
+      //       localIdentName: '[path][name]__[local]--[hash:base64:5]',
+      //     },
+      //   }]
+      // },
+
+      // { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') },
+
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: ['style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              modules: true,
+              // namedExport: true, // this is  invalid Options ,I find it
+              camelCase: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            },
+          }
+        ]
       },
       {
-       test: /\.(png|svg|jpg|gif)$/,
-       use: ['file-loader']
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader']
       }
     ]
   },
@@ -60,12 +92,14 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./src/html/index.html",
       filename: "./index.html",
-      excludeChunks: [ 'server' ]
+      excludeChunks: ['server']
     }),
 
     //new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
 
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+
+
   ]
 }

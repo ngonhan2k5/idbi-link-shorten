@@ -6,9 +6,10 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "buildDev": "rm -rf dist && webpack --mode development --config webpack.server.config.js && webpack --mode development --config webpack.dev.config.js",
+    "buildDev": "rm -rf dist && webpack --mode development --env.mode development --config webpack.server.config.js && webpack --mode development --config webpack.dev.config.js",
     "buildProd": "rm -rf dist && webpack --mode production --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js",
-    "start": "node ./dist/server.js"
+    "start": "node ./dist/server.js",
+    "initMongo": "node ./initmongo.js"
   },
   "jest": {
     "moduleNameMapper": {
@@ -22,8 +23,8 @@
     "@codenamize/codenamize": "^1.1.1",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
-    "connect-history-api-fallback": "^1.6.0",
     "memcached": "^2.2.2",
+    "mongodb": "^3.2.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",

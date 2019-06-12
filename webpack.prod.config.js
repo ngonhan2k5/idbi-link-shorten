@@ -54,11 +54,27 @@ module.exports = {
         test: /\.jpg$/,
         use: [{loader: "url-loader"}]
       },
+      // {
+      //   // Loads CSS into a file when you import it via Javascript
+      //   // Rules are set in MiniCssExtractPlugin
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, 'css-loader']
+      // },
+
       {
-        // Loads CSS into a file when you import it via Javascript
-        // Rules are set in MiniCssExtractPlugin
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: ['style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              modules: true,
+              // namedExport: true, // this is  invalid Options ,I find it
+              camelCase: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            },
+          }
+        ]
       },
     ]
   },
