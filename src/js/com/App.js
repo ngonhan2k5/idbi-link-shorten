@@ -1,5 +1,7 @@
 import React from "react";
 // import { directive } from "@babel/types";
+import '../../css/style.css'
+
 import CoolInput from './CoolInput'
 
 function App() {

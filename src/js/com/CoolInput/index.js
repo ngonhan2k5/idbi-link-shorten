@@ -75,7 +75,7 @@ class CoolInput extends React.Component {
                 <div id={styles.namer}>
                     
                     <div id={styles['namer-input']}>
-                        <input type="text" autoFocus onFocus={this.setFocus} name="url" value={this.url} placeholder="Input url to shorten" onChange={this.handleChange} onKeyUp={this.handleKeyUp}/>
+                        <input type="text" autoCapitalize="none" autoFocus onFocus={this.setFocus} name="url" value={this.url} placeholder="Input url to shorten" onChange={this.handleChange} onKeyUp={this.handleKeyUp}/>
                     </div>
                     <div className={this.state.validUrl?(styles["namer-controls"] + " " + styles.active) :styles["namer-controls"]} >
                         <div><span onClick={this.state.validUrl?this.handleClick:null}>Shorten</span></div>

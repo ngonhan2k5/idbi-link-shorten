@@ -2,12 +2,12 @@ var MongoClient = require('mongodb').MongoClient;
 var mongoUrl = "mongodb://localhost:27017/shorter";
 
 const db = {
-    saveUrl : (slug, shortedUrl) => {
+    saveUrl : (slug, url) => {
         
         MongoClient.connect(mongoUrl, function (err, db) {
             if (err) throw err
             var dbo = db.db("mydb")
-            var link = { slug:slug, shortedUrl:shortedUrl }
+            var link = { slug:slug, url:url }
             dbo.collection("links").insertOne(link, function (err, res) {
                 if (!err) 
                     console.log("1 link inserted")
