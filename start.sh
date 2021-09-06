@@ -1,4 +1,4 @@
-if ls dist > /dev/null; then
+if [ -d dist ]; then
     npm start
 else
     npm run buildProd
